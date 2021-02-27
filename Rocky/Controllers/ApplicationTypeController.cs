@@ -8,21 +8,22 @@ using System.Threading.Tasks;
 
 namespace Rocky.Controllers
 {
-    public class CategoryController : Controller
+    public class ApplicationTypeController : Controller
     {
         private readonly ApplicationDbContext _db;
-
-        public CategoryController(ApplicationDbContext db)
+        public ApplicationTypeController(ApplicationDbContext db)
         {
             _db = db;
         }
 
+
         public IActionResult Index()
         {
-            IEnumerable<Category> categories = _db.Categories;
+            IEnumerable <ApplicationType> applicationTypes = _db.ApplicationTypes;
 
-            return View(categories);
+            return View(applicationTypes);
         }
+
 
         public IActionResult Create()
         {
@@ -31,40 +32,42 @@ namespace Rocky.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category category)
+        public IActionResult Create(ApplicationType applicationType)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                _db.Categories.Add(category);
+                _db.ApplicationTypes.Add(applicationType);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+
+            return View(applicationType);
         }
 
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if(id == null || id == 0 )
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
-            return View(categoryFromDb);
+
+            var applicationTypeFromDb = _db.ApplicationTypes.Find(id);
+
+            return View(applicationTypeFromDb);
         }
 
         [HttpPost]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(ApplicationType applicationType)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(category);
+                _db.ApplicationTypes.Update(applicationType);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(applicationType);
         }
-
 
         public IActionResult Delete(int? id)
         {
@@ -72,20 +75,19 @@ namespace Rocky.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
-            return View(categoryFromDb);
+
+            var applicationTypeFromDb = _db.ApplicationTypes.Find(id);
+
+            return View(applicationTypeFromDb);
         }
 
         [HttpPost]
         public IActionResult DeletePost(int id)
         {
-            var categoryFromDb = _db.Categories.Find(id);
-            if(categoryFromDb == null)
-            {
-                return NotFound();
-            }
-             
-            _db.Categories.Remove(categoryFromDb);
+            var applicationTypeFromDb = _db.ApplicationTypes.Find(id);
+
+            _db.ApplicationTypes.Remove(applicationTypeFromDb);
+
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
