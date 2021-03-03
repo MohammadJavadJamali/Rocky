@@ -90,3 +90,7 @@ C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\App
 C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\ApplicationType\Index.cshtml.g.cs
 C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\ApplicationType\Delete.cshtml.g.cs
 C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Category\Delete.cshtml.g.cs
+C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
+C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Product\Upsert.cshtml.g.cs
+C:\Users\mohammadjavad\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Product\Delete.cshtml.g.cs
+C:\Users\mohammadjavad\source\repos\Rocky\Rocky\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
