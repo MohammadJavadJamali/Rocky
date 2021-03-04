@@ -31,6 +31,9 @@ namespace Rocky
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddHttpContextAccessor();
             services.AddSession(options =>
             {
@@ -42,8 +45,8 @@ namespace Rocky
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+           // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+          //      .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
         }
@@ -69,6 +72,7 @@ namespace Rocky
 
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseSession();
             app.UseEndpoints(endpoints =>
             {
