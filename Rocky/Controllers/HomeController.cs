@@ -36,12 +36,28 @@ namespace Rocky.Controllers
 
         public IActionResult Details(int id)
         {
+            List<Shoppingcart> shoppingcartList = new List<Shoppingcart>();
+            if (HttpContext.Session.Get<IEnumerable<Shoppingcart>>(WC.sessionCart) != null
+                && HttpContext.Session.Get<IEnumerable<Shoppingcart>>(WC.sessionCart).Count() > 0)
+            {
+                shoppingcartList = HttpContext.Session.Get<List<Shoppingcart>>(WC.sessionCart);
+            }
+
             DetailsVM detailsVM = new DetailsVM()
             {
                 Product = _db.Products.Include(u => u.Category).Include(u => u.ApplicationType)
                             .Where(u => u.Id == id).FirstOrDefault(),
                 ExistsInCart = false
             }; 
+
+            foreach(var item in shoppingcartList)
+            {
+                if(item.ProductId == id)
+                {
+                    detailsVM.ExistsInCart = true;
+                }
+            }
+
             return View(detailsVM);
         }
 
@@ -57,6 +73,23 @@ namespace Rocky.Controllers
             shoppingcartList.Add(new Shoppingcart { ProductId = id });
             HttpContext.Session.Set(WC.sessionCart, shoppingcartList);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveFromCart(int id)
+        {
+            List<Shoppingcart> shoppingcartList = new List<Shoppingcart>();
+            if (HttpContext.Session.Get<IEnumerable<Shoppingcart>>(WC.sessionCart) != null
+                && HttpContext.Session.Get<IEnumerable<Shoppingcart>>(WC.sessionCart).Count() > 0)
+            {
+                shoppingcartList = HttpContext.Session.Get<List<Shoppingcart>>(WC.sessionCart);
+            }
+            var shoppingCartForRemove = shoppingcartList.SingleOrDefault(r => r.ProductId == id);
+            if(shoppingCartForRemove != null)
+            {
+                shoppingcartList.Remove(shoppingCartForRemove);
+            }
+            HttpContext.Session.Set(WC.sessionCart, shoppingcartList);
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
