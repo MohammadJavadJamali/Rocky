@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Rocky.Utility
+@inject IHttpContextAccessor HttpContextAccessor  
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,9 +27,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 
                         </li>
-                        
+
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Content Management
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -35,6 +38,23 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
 
                             </div>
+                        </li>
+                        <li>
+                            @if (HttpContextAccessor.HttpContext.Session.Get<List<Shoppingcart>>(WC.sessionCart) != null)
+                            {
+                                <a asp-action="Cart" asp-controller="Home" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.Get<List<Shoppingcart>>(WC.sessionCart).Count;
+                                    }
+                                    <i class="fas fa-shopping-cart"></i>&nbsp;(@count)
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-shopping-cart"></i>&nbsp;(0)
+                                </a>
+                            }
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -55,10 +75,11 @@
     </footer>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/57ec97485d.js" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="https://kit.fontawesome.com/57ec97485d.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
